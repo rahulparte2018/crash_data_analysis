@@ -83,6 +83,7 @@ The following details the code and corresponding analysis that it produces:
 8. **code=8**: Identify the Top 5 Zip Codes with the highest number of crashes where alcohol was a contributing factor.
 9. **code=9**: Count the distinct Crash IDs where no damaged property was observed, the Damage Level is above 4, and the car avails insurance.
 10. **code=10**: Determine the Top 5 Vehicle Makes where drivers are charged with speeding-related offenses, have licensed drivers, use one of the top 10 most-used vehicle colors, and the car is licensed in one of the top 25 states with the highest number of offenses.
+11. **code=0**: To Run All the Analysis
 
 ## Additional Notes
 

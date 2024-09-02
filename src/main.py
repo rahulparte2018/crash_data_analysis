@@ -11,8 +11,8 @@ def main(config_file_path, analytics_code):
 
     # Create all the required objects
     loader = DataLoader(config)
-    analyzer = Analyzer(loader)
     saver = ResultSaver(config)
+    analyzer = Analyzer(loader, saver)
     
     # Perform required Analysis
     result = analyzer.analyze(analytics_code)

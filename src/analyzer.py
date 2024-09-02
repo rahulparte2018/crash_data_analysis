@@ -61,13 +61,18 @@ states_list = [
 states_dict = dict(states_list)
 
 class Analyzer:
-    def __init__(self, loader) -> None:
+    def __init__(self, loader, saver) -> None:
         self.loader = loader
+        self.saver = saver
 
     def analyze(self, code):
         # print('Anlysis code received is', code)
+        if code == 0:
+            self.__all_analysis()
+            print(f"Successfully Completed All Analysis")
+            return
+
         analysis_dict = {
-            0: self.__all_analysis,
             1: self.__analysis_for_code_1,
             2: self.__analysis_for_code_2,
             3: self.__analysis_for_code_3,
@@ -266,7 +271,16 @@ class Analyzer:
         return result
     
     def __all_analysis(self):
-        pass
-    
+        self.saver.save_results(self.__analysis_for_code_1(), f"Analytics_report_1")
+        self.saver.save_results(self.__analysis_for_code_2(), f"Analytics_report_2")
+        self.saver.save_results(self.__analysis_for_code_3(), f"Analytics_report_3")
+        self.saver.save_results(self.__analysis_for_code_4(), f"Analytics_report_4")
+        self.saver.save_results(self.__analysis_for_code_5(), f"Analytics_report_5")
+        self.saver.save_results(self.__analysis_for_code_6(), f"Analytics_report_6")
+        self.saver.save_results(self.__analysis_for_code_7(), f"Analytics_report_7")
+        self.saver.save_results(self.__analysis_for_code_8(), f"Analytics_report_8")
+        self.saver.save_results(self.__analysis_for_code_9(), f"Analytics_report_9")
+        self.saver.save_results(self.__analysis_for_code_10(), f"Analytics_report_10")
+
         
     
