@@ -6,17 +6,22 @@ class DataLoader:
         self.config = config
         self.spark = SparkSession.builder.appName("CrashAnalysis").config("spark.hadoop.fs.defaultFS", "file:///").master("local[*]").getOrCreate()
         self.data_dictionary = self.get_data_dictionary()
+        self.table_cache = {}
 
     def load_table(self, table_name):
-        # here table_name is the file_name in the input path
+        if table_name in self.table_cache:
+            return self.table_cache[table_name]
 
+        file_name = self.config['tables_file_path'][table_name]
         # print(self.config)
         base_path = '\\'.join(self.config['project']['base_path'].split('/')) 
         input_path = '\\'.join(self.config['data']['input_path'].split('/'))
-        file_path = os.path.join(base_path, input_path, table_name)
+        file_path = os.path.join(base_path, input_path, file_name)
         # print(file_path)
-        schema = self.get_schema(table_name)
-        return self.spark.read.csv(file_path, header=True, schema=schema)
+        schema = self.get_schema(file_name)
+        result = self.spark.read.csv(file_path, header=True, schema=schema)
+        self.table_cache[table_name] = result
+        return result
     
     def get_schema(self, table_name):
         # table_name = file_name in input path

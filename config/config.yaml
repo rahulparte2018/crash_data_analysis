@@ -4,3 +4,10 @@ data:
   input_path: "data/input"
   output_path:  "data/output"
   data_dictionary_path: "data/data_dictionary/data_dictionary_2024_08_31.csv"
+tables_file_path:
+  primary_person: "Primary_Person_use.csv"
+  units: "Units_use.csv"
+  charges: "Charges_use.csv"
+  damages: "Damages_use.csv"
+  endorse: "Endorse_use.csv"
+  restrict: "Restrict_use.csv"

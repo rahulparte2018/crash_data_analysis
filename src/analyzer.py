@@ -94,7 +94,7 @@ class Analyzer:
 
     def __analysis_for_code_1(self):
         print('Performing Analytics 1: Find the number of crashes (accidents) in which number of males killed are greater than 2?')
-        df = self.loader.load_table('Primary_Person_use.csv')
+        df = self.loader.load_table('primary_person')
         # df.show(5)
 
         filtered_df = df.filter( (df['PRSN_INJRY_SEV_ID'] == 'KILLED') & (df['PRSN_GNDR_ID'] == 'MALE') ).select('CRASH_ID')
@@ -109,7 +109,7 @@ class Analyzer:
     
     def __analysis_for_code_2(self):
         print('Performing Analysis 2: How many two wheelers are booked for crashes?')
-        df = self.loader.load_table('Units_use.csv')
+        df = self.loader.load_table('units')
         filtered_df = df.filter( df['VEH_BODY_STYL_ID'] == 'MOTORCYCLE' ).select('CRASH_ID')
         # result = filtered_df.select('CRASH_ID').distinct().count()
         result = filtered_df.count()
@@ -119,7 +119,7 @@ class Analyzer:
     
     def __analysis_for_code_3(self):
         print('Performing Analysis 3: Determine the Top 5 Vehicle Makes of the cars present in the crashes in which driver died and Airbags did not deploy.')
-        df1 = self.loader.load_table('Primary_Person_use.csv')
+        df1 = self.loader.load_table('primary_person')
         filtered_df1 = df1.filter( (df1['PRSN_TYPE_ID']=='DRIVER') & (df1['PRSN_INJRY_SEV_ID']=='KILLED') & (df1['PRSN_AIRBAG_ID']=='NOT DEPLOYED')).select('CRASH_ID','UNIT_NBR')
         # print(filtered_df1.count())
         body_style_list = [
@@ -134,7 +134,7 @@ class Analyzer:
             'UNKNOWN',
             'VAN'
         ]
-        df2 = self.loader.load_table('Units_use.csv').select('CRASH_ID','UNIT_NBR','VEH_MAKE_ID','VEH_BODY_STYL_ID')
+        df2 = self.loader.load_table('units').select('CRASH_ID','UNIT_NBR','VEH_MAKE_ID','VEH_BODY_STYL_ID')
         filtered_df2 = df2.filter( ~(df2['VEH_MAKE_ID'].isin(['NA','UNKNOWN','OTHER (EXPLAIN IN NARRATIVE)','ALL OTHER MAKES'])) & (df2['VEH_BODY_STYL_ID'].isin(body_style_list)))
         # print(filtered_df2.count())
         join_df3 = filtered_df2.join(filtered_df1, on=['CRASH_ID','UNIT_NBR'], how='inner')
@@ -144,12 +144,12 @@ class Analyzer:
       
     def __analysis_for_code_4(self):
         print('Performing Analysis 4: Determine number of Vehicles with driver having valid licences involved in hit and run?')
-        df1 = self.loader.load_table('Primary_Person_use.csv')
+        df1 = self.loader.load_table('primary_person')
         lic_type_list = ['COMMERCIAL DRIVER LIC.', 'DRIVER LICENSE', 'OCCUPATIONAL', 'OTHER']
         filtered_df1 = df1.filter( (df1['PRSN_TYPE_ID']=='DRIVER') & (df1['DRVR_LIC_TYPE_ID'].isin(lic_type_list)) & ~(df1['DRVR_LIC_CLS_ID']=='UNLICENSED') )
         # print(filtered_df1.count())
 
-        df2 = self.loader.load_table('Units_use.csv')
+        df2 = self.loader.load_table('units')
         filtered_df2 = df2.filter( (df2['VEH_HNR_FL']=='Y') )
         # print(filtered_df2.count())
 
@@ -161,7 +161,7 @@ class Analyzer:
     
     def __analysis_for_code_5(self):
         print('Performing Analysis 5: Which state has highest number of accidents in which females are not involved?')
-        df = self.loader.load_table('Primary_Person_use.csv')
+        df = self.loader.load_table('primary_person')
 
         females_group_df = df.filter( (df['PRSN_GNDR_ID']=='FEMALE') ).select('CRASH_ID').distinct()
         # print(females_group_df.count())
@@ -178,7 +178,7 @@ class Analyzer:
     
     def __analysis_for_code_6(self):
         print('Performing Analysis 6: Which are the Top 3rd to 5th VEH_MAKE_IDs that contribute to a largest number of injuries including death')
-        df = self.loader.load_table('Units_use.csv')
+        df = self.loader.load_table('units')
         
         result = df.withColumn('final_injr_cnt', col('UNKN_INJRY_CNT') + col('TOT_INJRY_CNT') + col('DEATH_CNT') ).groupBy('VEH_MAKE_ID').agg( sum('final_injr_cnt').alias('cnt') )
         # result.show(10)
@@ -190,8 +190,8 @@ class Analyzer:
     
     def __analysis_for_code_7(self):
         print('Performing Analysis 7: For all the body styles involved in crashes, mention the top ethnic user group of each unique body style')
-        df1 = self.loader.load_table('Primary_Person_use.csv').select('CRASH_ID','UNIT_NBR','PRSN_ETHNICITY_ID').filter( ~(col('PRSN_ETHNICITY_ID').isin(['NA','OTHER','UNKNOWN'])))
-        df2 = self.loader.load_table('Units_use.csv').select('CRASH_ID','UNIT_NBR','VEH_BODY_STYL_ID').filter( ~(col('VEH_BODY_STYL_ID').isin(['NA','NOT REPORTED','UNKNOWN','OTHER  (EXPLAIN IN NARRATIVE)'])) )
+        df1 = self.loader.load_table('primary_person').select('CRASH_ID','UNIT_NBR','PRSN_ETHNICITY_ID').filter( ~(col('PRSN_ETHNICITY_ID').isin(['NA','OTHER','UNKNOWN'])))
+        df2 = self.loader.load_table('units').select('CRASH_ID','UNIT_NBR','VEH_BODY_STYL_ID').filter( ~(col('VEH_BODY_STYL_ID').isin(['NA','NOT REPORTED','UNKNOWN','OTHER  (EXPLAIN IN NARRATIVE)'])) )
         df3 = df1.join(df2, on=['CRASH_ID','UNIT_NBR'], how='inner')
         df_grouped = df3.groupBy(['VEH_BODY_STYL_ID','PRSN_ETHNICITY_ID']).agg(count('*').alias('cnt'))
         window_spec = Window.partitionBy('VEH_BODY_STYL_ID').orderBy(col('cnt').desc())
@@ -204,10 +204,10 @@ class Analyzer:
         print('Performing Analysis 8: Among the crashed cars, what are the Top 5 Zip Codes with highest number crashes with alcohols as the contributing factor to a crash (Use Driver Zip Code)')
         factor_list = ['HAD BEEN DRINKING','UNDER INFLUENCE - ALCOHOL']
         car_type_list = ['NEV-NEIGHBORHOOD ELECTRIC VEHICLE','PASSENGER CAR, 2-DOOR','PASSENGER CAR, 4-DOOR','PICKUP','POLICE CAR/TRUCK','SPORT UTILITY VEHICLE','TRUCK','VAN']
-        df1 = self.loader.load_table('Units_use.csv').select('CRASH_ID','UNIT_NBR','VEH_BODY_STYL_ID','CONTRIB_FACTR_1_ID','CONTRIB_FACTR_2_ID','CONTRIB_FACTR_P1_ID')\
+        df1 = self.loader.load_table('units').select('CRASH_ID','UNIT_NBR','VEH_BODY_STYL_ID','CONTRIB_FACTR_1_ID','CONTRIB_FACTR_2_ID','CONTRIB_FACTR_P1_ID')\
             .filter( ((col('CONTRIB_FACTR_1_ID').isin(factor_list)) | (col('CONTRIB_FACTR_2_ID').isin(factor_list)) | (col('CONTRIB_FACTR_P1_ID').isin(factor_list))) & (col('VEH_BODY_STYL_ID').isin(car_type_list)) )
         # df1.show(10, truncate=False)
-        df2 = self.loader.load_table('Primary_Person_use.csv').select('CRASH_ID','UNIT_NBR','DRVR_ZIP').filter( (col('DRVR_ZIP').isNotNull()) )
+        df2 = self.loader.load_table('primary_person').select('CRASH_ID','UNIT_NBR','DRVR_ZIP').filter( (col('DRVR_ZIP').isNotNull()) )
         df_joined = df1.join(df2, on=['CRASH_ID','UNIT_NBR'], how='inner')
         df_grouped = df_joined.groupBy('DRVR_ZIP').agg(countDistinct('CRASH_ID').alias('cnt'))
         df_ordered = df_grouped.orderBy(col('cnt').desc())
@@ -219,10 +219,10 @@ class Analyzer:
     def __analysis_for_code_9(self):
         print('Performing Analysis 9: Count of Distinct Crash IDs where No Damaged Property was observed and Damage Level (VEH_DMAG_SCL~) is above 4 and car avails Insurance')
         damage_levels = ['DAMAGED 5','DAMAGED 6','DAMAGED 7 HIGHEST']
-        df1 = self.loader.load_table('Units_use.csv').select('CRASH_ID','UNIT_NBR','VEH_DMAG_SCL_1_ID','VEH_DMAG_SCL_2_ID','FIN_RESP_TYPE_ID') \
+        df1 = self.loader.load_table('units').select('CRASH_ID','UNIT_NBR','VEH_DMAG_SCL_1_ID','VEH_DMAG_SCL_2_ID','FIN_RESP_TYPE_ID') \
                 .filter( ((col('VEH_DMAG_SCL_1_ID').isin(damage_levels)) | (col('VEH_DMAG_SCL_2_ID').isin(damage_levels))) & (col('FIN_RESP_TYPE_ID').contains('INSURANCE')) )
         
-        df2 = self.loader.load_table('Damages_use.csv').select('CRASH_ID')
+        df2 = self.loader.load_table('damages').select('CRASH_ID')
 
         all_crashes = df1.select('CRASH_ID').distinct()
         property_damaged_crashes = df2.select('CRASH_ID').distinct()
@@ -235,9 +235,9 @@ class Analyzer:
     
     def __analysis_for_code_10(self):
         print('Performing Analysis 10: Determine the Top 5 Vehicle Makes where drivers are charged with speeding related offences, has licensed Drivers, used top 10 used vehicle colours and has car licensed with the Top 25 states with highest number of offences (to be deduced from the data)')
-        df1 = self.loader.load_table('Units_use.csv')
-        df2 = self.loader.load_table('Primary_Person_use.csv')
-        df3 = self.loader.load_table('Charges_use.csv')
+        df1 = self.loader.load_table('units')
+        df2 = self.loader.load_table('primary_person')
+        df3 = self.loader.load_table('charges')
 
         color_df = df1.filter( ~(col('VEH_COLOR_ID')=='NA') ).groupBy('VEH_COLOR_ID').agg(count('*').alias('cnt')).orderBy(col('cnt').desc()).limit(10)
         top_colors = [row['VEH_COLOR_ID'] for row in color_df.collect()]
