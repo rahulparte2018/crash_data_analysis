@@ -1,0 +1,83 @@
+﻿table_name,file_name,file_column_name,file_data_type,column_description
+Charges,Charges_use.csv,CRASH_ID,integer,Crash ID – System-generated unique identifying number for a crash
+Charges,Charges_use.csv,UNIT_NBR,integer,The unit of the person who was charged
+Charges,Charges_use.csv,PRSN_NBR,integer,The person who was charged
+Charges,Charges_use.csv,CHARGE,string,Charge
+Charges,Charges_use.csv,CITATION_NBR,string,Citation/Reference Number
+Endorsements,Endorse_use.csv,CRASH_ID,integer,Crash ID – System-generated unique identifying number for a crash
+Endorsements,Endorse_use.csv,UNIT_NBR,integer,The unit of the person who was charged
+Endorsements,Endorse_use.csv,DRVR_LIC_ENDORS_ID,string,Commercial Driver License Endorsements
+Restrict,Restrict_use.csv,CRASH_ID,integer,Crash ID – System-generated unique identifying number for a crash
+Restrict,Restrict_use.csv,UNIT_NBR,integer,The unit of the person who was charged
+Restrict,Restrict_use.csv,DRVR_LIC_RESTRIC_ID,string,Driver License Restrictions
+Damages,Damages_use.csv,CRASH_ID,integer,Crash ID – System-generated unique identifying number for a crash
+Damages,Damages_use.csv,DAMAGED_PROPERTY,string,Damaged Property other than Vehicles
+Primary Person,Primary_Person_use.csv,CRASH_ID,integer,Crash ID – System-generated unique identifying number for a crash  
+Primary Person,Primary_Person_use.csv,UNIT_NBR,integer,Unit number entered on crash report for a unit involved in the crash
+Primary Person,Primary_Person_use.csv,PRSN_NBR,integer,Person number captured on the crash report
+Primary Person,Primary_Person_use.csv,PRSN_TYPE_ID,string,Person Type
+Primary Person,Primary_Person_use.csv,PRSN_OCCPNT_POS_ID,string,"The physical location of an occupant in, on, or outside of the motor vehicle prior to the First Harmful Event or loss of control"
+Primary Person,Primary_Person_use.csv,PRSN_INJRY_SEV_ID,string,Severity of injury to the occupant
+Primary Person,Primary_Person_use.csv,PRSN_AGE,integer,Age of person involved in the crash
+Primary Person,Primary_Person_use.csv,PRSN_ETHNICITY_ID,string,Ethnicity of person involved in the crash
+Primary Person,Primary_Person_use.csv,PRSN_GNDR_ID,string,Gender of person involved in the crash
+Primary Person,Primary_Person_use.csv,PRSN_EJCT_ID,string,The extent to which the person's body was expelled from the vehicle during any part of the crash
+Primary Person,Primary_Person_use.csv,PRSN_REST_ID,string,The type of restraint used by each occupant
+Primary Person,Primary_Person_use.csv,PRSN_AIRBAG_ID,string,Indicates whether a person's airbag deployed during the crash and in what manner
+Primary Person,Primary_Person_use.csv,PRSN_HELMET_ID,string,Indicates if a helmet was worn at the time of the crash
+Primary Person,Primary_Person_use.csv,PRSN_SOL_FL,string,Solicitation flag
+Primary Person,Primary_Person_use.csv,PRSN_ALC_SPEC_TYPE_ID,string,Type of alcohol specimen taken for analysis from the primary persons involved in the crash
+Primary Person,Primary_Person_use.csv,PRSN_ALC_RSLT_ID,string,Alcohol Result
+Primary Person,Primary_Person_use.csv,PRSN_BAC_TEST_RSLT,double,"Numeric blood alcohol content test result for a primary person involved in the crash, using standardized alcohol breath results (i.e. .08 or .129)"
+Primary Person,Primary_Person_use.csv,PRSN_DRG_SPEC_TYPE_ID,string,Type of drug specimen taken for analysis from the primary persons involved in the crash
+Primary Person,Primary_Person_use.csv,PRSN_DRG_RSLT_ID,string,Primary person drug test result
+Primary Person,Primary_Person_use.csv,DRVR_DRG_CAT_1_ID,string,First category of drugs related to the driver
+Primary Person,Primary_Person_use.csv,PRSN_DEATH_TIME,string,Primary person's time of death.
+Primary Person,Primary_Person_use.csv,INCAP_INJRY_CNT,integer,Suspected Serious Injury Count
+Primary Person,Primary_Person_use.csv,NONINCAP_INJRY_CNT,integer,Non-incapacitating Injury Count
+Primary Person,Primary_Person_use.csv,POSS_INJRY_CNT,integer,Possible Injury Count
+Primary Person,Primary_Person_use.csv,NON_INJRY_CNT,integer,Not Injured Count
+Primary Person,Primary_Person_use.csv,UNKN_INJRY_CNT,integer,Unknown Injury Count
+Primary Person,Primary_Person_use.csv,TOT_INJRY_CNT,integer,Total Injury Count
+Primary Person,Primary_Person_use.csv,DEATH_CNT,integer,Death Count
+Primary Person,Primary_Person_use.csv,DRVR_LIC_TYPE_ID,string,Driver's license type
+Primary Person,Primary_Person_use.csv,DRVR_LIC_STATE_ID,string,The state or province that issued the vehicle driver's license or identification card
+Primary Person,Primary_Person_use.csv,DRVR_LIC_CLS_ID,string,Driver's license clas
+Primary Person,Primary_Person_use.csv,DRVR_ZIP,string,Driver's address - zip code
+Unit,Units_use.csv,CRASH_ID,integer,Crash ID – System-generated unique identifying number for a crash
+Unit,Units_use.csv,UNIT_NBR,integer,Unit number entered on crash report for a unit involved in the crash
+Unit,Units_use.csv,UNIT_DESC_ID,string,Unit Description  - Describes the type of unit
+Unit,Units_use.csv,VEH_PARKED_FL,string,Parked Vehicle
+Unit,Units_use.csv,VEH_HNR_FL,string,Hit and Run
+Unit,Units_use.csv,VEH_LIC_STATE_ID,string,License Plate State
+Unit,Units_use.csv,VIN,string,VIN
+Unit,Units_use.csv,VEH_MOD_YEAR,integer,4–digit numeric model year of the vehicle as designated by the manufacturer
+Unit,Units_use.csv,VEH_COLOR_ID,string,Vehicle Color
+Unit,Units_use.csv,VEH_MAKE_ID,string,"The vehicle manufacturer’s distinctive name applied to a group of motor vehicles (Ford, Chevrolet, etc.)"
+Unit,Units_use.csv,VEH_MOD_ID,string,The vehicle manufacturer’s trade name
+Unit,Units_use.csv,VEH_BODY_STYL_ID,string,The body style of the vehicle involved in the crash
+Unit,Units_use.csv,EMER_RESPNDR_FL,string,"Indicates if a peace officer, firefighter, or emergency medical services employee is involved in a crash while driving a law enforcement vehicle, fire department vehicle, or medical emergency services vehicle while on emergency"
+Unit,Units_use.csv,OWNR_ZIP,string,"Owner Address, Zip"
+Unit,Units_use.csv,FIN_RESP_PROOF_ID,integer,Indicates whether the vehicle driver presented satisfactory evidence of financial responsibility
+Unit,Units_use.csv,FIN_RESP_TYPE_ID,string,Financial Responsibility Type
+Unit,Units_use.csv,VEH_DMAG_AREA_1_ID,string,Vehicle Damage Rating 1 - Area
+Unit,Units_use.csv,VEH_DMAG_SCL_1_ID,string,Vehicle Damage Rating 1 - Severity
+Unit,Units_use.csv,FORCE_DIR_1_ID,integer,Vehicle Damage Rating 1 - Direction of Force
+Unit,Units_use.csv,VEH_DMAG_AREA_2_ID,string,Vehicle Damage Rating 2 - Area
+Unit,Units_use.csv,VEH_DMAG_SCL_2_ID,string,Vehicle Damage Rating 2 - Severity
+Unit,Units_use.csv,FORCE_DIR_2_ID,integer,Vehicle Damage Rating 1 - Direction of Force
+Unit,Units_use.csv,VEH_INVENTORIED_FL,string,Vehicle Inventoried
+Unit,Units_use.csv,VEH_TRANSP_NAME,string,Towed By
+Unit,Units_use.csv,VEH_TRANSP_DEST,string,Towed To
+Unit,Units_use.csv,CONTRIB_FACTR_1_ID,string,The first factor for the vehicle  which the officer felt contributed to the crash
+Unit,Units_use.csv,CONTRIB_FACTR_2_ID,string,The second factor for the vehicle  which the officer felt contributed to the crash
+Unit,Units_use.csv,CONTRIB_FACTR_P1_ID,string,The first factor for the vehicle  which the officer felt contributed to the crash
+Unit,Units_use.csv,VEH_TRVL_DIR_ID,string,Cardinal direction that the vehicle was traveling prior to the First Harmful Event or loss of control
+Unit,Units_use.csv,FIRST_HARM_EVT_INV_ID,string,IF- Indicate First Harmful Event Involvement
+Unit,Units_use.csv,INCAP_INJRY_CNT,integer,Suspected Serious Injury Count
+Unit,Units_use.csv,NONINCAP_INJRY_CNT,integer,Non-incapacitating Injury Count
+Unit,Units_use.csv,POSS_INJRY_CNT,integer,Possible Injury Count
+Unit,Units_use.csv,NON_INJRY_CNT,integer,Not Injured Count
+Unit,Units_use.csv,UNKN_INJRY_CNT,integer,Unknown Injury Count
+Unit,Units_use.csv,TOT_INJRY_CNT,integer,Total Injury Count
+Unit,Units_use.csv,DEATH_CNT,integer,Death Count

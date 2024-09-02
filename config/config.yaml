@@ -1,0 +1,6 @@
+project: 
+  base_path: "E:/BCG_Case_Study/Data Engineering Case study - New 24/crash_data_analysis"    # yaml is unable to read \ but handle \\ or we can put r
+data:
+  input_path: "data/input"
+  output_path:  "data/output"
+  data_dictionary_path: "data/data_dictionary/data_dictionary_2024_08_31.csv"
