@@ -64,7 +64,7 @@ Usage:
         analyzer.analyze(0)    # Perform all analyses
 """
 
-from pyspark.sql.functions import col, count, countDistinct, row_number, monotonically_increasing_id,sum
+from pyspark.sql.functions import col, count, countDistinct, row_number, monotonically_increasing_id,sum, max
 from pyspark.sql.window import Window
 
 # Define the list of state names and abbreviations
@@ -175,10 +175,12 @@ class Analyzer:
     
     def __analysis_for_code_2(self):
         print('Performing Analysis 2: How many two wheelers are booked for crashes?')
-        df = self.loader.load_table('units')
-        filtered_df = df.filter( df['VEH_BODY_STYL_ID'] == 'MOTORCYCLE' ).select('CRASH_ID')
-        # result = filtered_df.select('CRASH_ID').distinct().count()
-        result = filtered_df.count()
+        df1 = self.loader.load_table('units').select('CRASH_ID','UNIT_NBR','VEH_BODY_STYL_ID')
+        filtered_df1 = df1.filter( col('VEH_BODY_STYL_ID') == 'MOTORCYCLE' )
+
+        df2 = self.loader.load_table('charges').select('CRASH_ID','UNIT_NBR')
+        result = filtered_df1.join(df2, on=['CRASH_ID','UNIT_NBR'], how='inner')
+        result = result.count()
         result = f'Number of two wheeler booked for crashes are {result}'
         print(result)
         return result
@@ -227,7 +229,23 @@ class Analyzer:
     
     def __analysis_for_code_5(self):
         print('Performing Analysis 5: Which state has highest number of accidents in which females are not involved?')
-        df = self.loader.load_table('primary_person')
+        df = self.loader.load_table('primary_person').select('CRASH_ID','PRSN_GNDR_ID','DRVR_LIC_STATE_ID')
+
+        # Get the crash IDs that involve females
+        crashes_with_females = df.filter(col('PRSN_GNDR_ID') == 'FEMALE').select('CRASH_ID').distinct()
+    
+        # Filter out crashes that involve females
+        crashes_without_females = df.join(crashes_with_females, on='CRASH_ID', how='left_anti')
+        
+        result = crashes_without_females.groupBy('DRVR_LIC_STATE_ID').agg( countDistinct('CRASH_ID').alias('cnt') ).orderBy( col('cnt').desc() ).drop('cnt').limit(1)
+
+        return result
+
+        crash_with_females = [row['CRASH_ID'] for row in df.filter( (col('PRSN_GNDR_ID')=='FEMALE')).select('CRASH_ID').distinct().collect()]
+        result = df.filter( ~(col('CRASH_ID').isin(crash_with_females)) & ~(df['DRVR_LIC_STATE_ID'].isin(['Unknown','NA'])) ).groupBy('DRVR_LIC_STATE_ID').agg( countDistinct('CRASH_ID').alias('cnt') ).orderBy( col('cnt').desc() ).drop('cnt').limit(1)
+        # result.show()
+        # return None
+        return result
 
         females_group_df = df.filter( (df['PRSN_GNDR_ID']=='FEMALE') ).select('CRASH_ID').distinct()
         # print(females_group_df.count())
