@@ -1,3 +1,69 @@
+"""
+This module defines the `Analyzer` class, which is used to perform various data analysis tasks on 
+traffic crash data. The `Analyzer` class is initialized with a `loader` and `saver` object, where 
+`loader` is responsible for loading data tables, and `saver` is responsible for saving the analysis 
+results.
+
+Attributes:
+    states_list (list): A list of tuples containing state names and their corresponding abbreviations.
+    states_dict (dict): A dictionary mapping state names to their abbreviations.
+
+Classes:
+    Analyzer: A class for performing various analyses on traffic crash data.
+
+Methods:
+    __init__(self, loader, saver) -> None:
+        Initializes the Analyzer object with a loader and saver.
+
+    analyze(self, code):
+        Executes the analysis based on the provided code. If the code is 0, it performs all analyses.
+
+    __analysis_for_code_1(self):
+        Performs analysis 1: Finds the number of crashes where more than 2 males were killed.
+
+    __analysis_for_code_2(self):
+        Performs analysis 2: Counts the number of crashes involving two-wheelers.
+
+    __analysis_for_code_3(self):
+        Performs analysis 3: Determines the top 5 vehicle makes in crashes where the driver died and airbags did not deploy.
+
+    __analysis_for_code_4(self):
+        Performs analysis 4: Counts the number of vehicles with drivers holding valid licenses involved in hit-and-run incidents.
+
+    __analysis_for_code_5(self):
+        Performs analysis 5: Identifies the state with the highest number of accidents where females were not involved.
+
+    __analysis_for_code_6(self):
+        Performs analysis 6: Identifies the top 3rd to 5th vehicle makes contributing to the largest number of injuries, including death.
+
+    __analysis_for_code_7(self):
+        Performs analysis 7: Identifies the top ethnic user group for each unique body style involved in crashes.
+
+    __analysis_for_code_8(self):
+        Performs analysis 8: Identifies the top 5 ZIP codes with the highest number of alcohol-related crashes involving cars.
+
+    __analysis_for_code_9(self):
+        Performs analysis 9: Counts the distinct crash IDs where no damaged property was observed, the damage level is above 4, and the car had insurance.
+
+    __analysis_for_code_10(self):
+        Performs analysis 10: Identifies the top 5 vehicle makes involved in speeding-related offenses with licensed drivers, top 10 vehicle colors, and top 25 states with the highest number of offenses.
+
+    __all_analysis(self):
+        Performs all the analyses (from code 1 to 10) and saves the results.
+
+Usage:
+    The `Analyzer` class is designed to perform a set of pre-defined analyses on traffic crash data.
+    These analyses can be triggered by passing a specific code to the `analyze` method. For example,
+    calling `analyze(1)` will execute the analysis corresponding to code 1.
+
+    Example:
+        loader = DataLoader(config)  # Replace with actual loader object
+        saver = DataSaver(config)    # Replace with actual saver object
+        analyzer = Analyzer(loader, saver)
+        analyzer.analyze(1)    # Perform analysis 1
+        analyzer.analyze(0)    # Perform all analyses
+"""
+
 from pyspark.sql.functions import col, count, countDistinct, row_number, monotonically_increasing_id,sum
 from pyspark.sql.window import Window
 
